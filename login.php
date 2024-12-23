@@ -64,9 +64,9 @@ if (isset($_POST['submit'])) {
                     <a href="register.php" class="w3-text-teal">Don't have an account? Register</a>
                 </div>
     </div>
-    <div class="w3-center w3-container">
+<!--     <div class="w3-center w3-container">
         <a href="register.php">Register</a>
-    </div>
+    </div> -->
     <div class="" style="height:200px">
     </div>
     <footer class="w3-container w3-grey">
@@ -106,4 +106,4 @@ function loadData() {
 
 </html>
 
-<
+
