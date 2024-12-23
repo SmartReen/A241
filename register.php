@@ -1,29 +1,70 @@
 <?php
 
+// $nameErr = $emailErr =  "";
+// $name = $email = $gender  = "";
+
+// if (isset($_POST['submit'])) {
+//     $email =($_POST["useremail"]);
+//     $password = sha1($_POST['password']);
+//     $name = $_POST['username'];
+//     $phone = $_POST['userphone'];
+//     $gender = $_POST['usergender'];
+//     $datebirth = $_POST['userdatebirth'];
+//     $sqlregister = "INSERT INTO tbl_users (usr_email, usr_name, usr_phone, usr_gender, usr_password, usr_dbirth) 
+//                 VALUES ('$email', '$name', '$phone', '$gender', '$password', '$datebirth')";
+
+
+    
+// try{
+//     include("dbconnect.php"); // database connection
+//     $conn->query($sqlregister);
+//     echo "<script>alert('Success')</script>";
+//     echo "<script>window.location.replace('login.php')</script>";
+//     }catch(PDOException $e){
+//     echo "<script>alert('Failed!!!')</script>";
+//     echo "<script>window.location.replace('register.php')</script>";
+//    }
+// }
+
+?>
+<?php
+
 $nameErr = $emailErr =  "";
 $name = $email = $gender  = "";
 
 if (isset($_POST['submit'])) {
-    $email =($_POST["useremail"]);
+    $email = ($_POST["useremail"]);
     $password = sha1($_POST['password']);
     $name = $_POST['username'];
     $phone = $_POST['userphone'];
     $gender = $_POST['usergender'];
     $datebirth = $_POST['userdatebirth'];
-    $sqlregister = "INSERT INTO tbl_users (usr_email, usr_name, usr_phone, usr_gender, usr_password, usr_dbirth) 
-                VALUES ('$email', '$name', '$phone', '$gender', '$password', '$datebirth')";
 
-
+    // Check if email already exists
+    $sqlCheckEmail = "SELECT * FROM tbl_users WHERE usr_email = :email";
     
-try{
-    include("dbconnect.php"); // database connection
-    $conn->query($sqlregister);
-    echo "<script>alert('Success')</script>";
-    echo "<script>window.location.replace('login.php')</script>";
-    }catch(PDOException $e){
-    echo "<script>alert('Failed!!!')</script>";
-    echo "<script>window.location.replace('register.php')</script>";
-   }
+    try {
+        include("dbconnect.php"); // database connection
+        $stmt = $conn->prepare($sqlCheckEmail);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+
+        // If email exists, show error
+        if ($stmt->rowCount() > 0) {
+            echo "<script>alert('Email already exists! Please use a different email.')</script>";
+            echo "<script>window.location.replace('register.php')</script>";
+        } else {
+            // Proceed with registration
+            $sqlregister = "INSERT INTO tbl_users (usr_email, usr_name, usr_phone, usr_gender, usr_password, usr_dbirth) 
+                            VALUES ('$email', '$name', '$phone', '$gender', '$password', '$datebirth')";
+            $conn->query($sqlregister);
+            echo "<script>alert('Success')</script>";
+            echo "<script>window.location.replace('login.php')</script>";
+        }
+    } catch (PDOException $e) {
+        echo "<script>alert('Failed!!!')</script>";
+        echo "<script>window.location.replace('register.php')</script>";
+    }
 }
 
 ?>
