@@ -186,7 +186,7 @@ function truncate($string, $length, $dots = "...")
         <div class="w3-container w3-display-container w3-padding-16">
             <button onclick="close_menu()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"
                 aria-label="Close menu"></button>
-
+            <h3 class="w3-wide" style="color: #ecf0f1;"><b>News</b></h3>
         </div>
         <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold;">
             <a href="mainpage.php" class="w3-bar-item w3-button" role="link">
